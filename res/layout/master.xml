@@ -3,8 +3,6 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_padding"
-    android:background="@drawable/background"
     tools:context=".MainActivity" >
 
     <ListView

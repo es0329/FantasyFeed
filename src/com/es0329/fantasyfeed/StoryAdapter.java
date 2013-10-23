@@ -3,7 +3,8 @@ package com.es0329.fantasyfeed;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -53,7 +54,9 @@ public class StoryAdapter extends ArrayAdapter<Story> {
 
 			@Override
 			public void onClick(View v) {
-				Log.i("LINK", stories.get(position).getLink());
+				Intent browser = new Intent(Intent.ACTION_VIEW, Uri
+						.parse(stories.get(position).getLink()));
+				getContext().startActivity(browser);
 			}
 		});
 		return row;

@@ -94,7 +94,6 @@ public class MasterFragment extends Fragment {
 	};
 
 	private void displayStories() {
-		// Log.i("STORIES", "" + stories.toString());
 		adapter = new StoryAdapter(getActivity(), R.layout.story, stories);
 		list.setAdapter(adapter);
 		progress.setVisibility(View.GONE);
