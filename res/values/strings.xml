@@ -2,5 +2,8 @@
 <resources>
 
     <string name="app_name">Fantasy Feed</string>
+    <string name="article_photo">Article photo.</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
+    <string name="data_credit">Powered by ESPN.</string>
 
 </resources>

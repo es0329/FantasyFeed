@@ -8,11 +8,24 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.image.SmartImageView;
 
+/**
+ * @author <a href="https://twitter.com/es0329">Eric</a>
+ */
 public class MainActivity extends Activity {
+	private ListView list;
+	private ProgressBar progress;
+	private SmartImageView dataCredit;
+	private StoryAdapter adapter;
+	private Story tempStory;
 	private ArrayList<Story> stories;
 
 	@Override
@@ -20,7 +33,16 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		wireViews();
 		checkNewsFeed();
+	}
+
+	private void wireViews() {
+		list = (ListView) findViewById(R.id.list);
+		progress = (ProgressBar) findViewById(R.id.progress);
+		dataCredit = (SmartImageView) findViewById(R.id.dataCredit);
+		dataCredit
+				.setImageUrl("http://a.espncdn.com/i/apis/attribution/powered-by-espn-silver_200.png");
 	}
 
 	private void checkNewsFeed() {
@@ -34,7 +56,6 @@ public class MainActivity extends Activity {
 		@Override
 		public void onSuccess(JSONObject response) {
 			stories = new ArrayList<Story>();
-			Story tempStory = new Story();
 
 			try {
 				JSONArray headlines = response.getJSONArray("headlines");
@@ -43,6 +64,7 @@ public class MainActivity extends Activity {
 				JSONObject mobile = new JSONObject();
 
 				for (int i = 0; i < headlines.length(); i++) {
+					tempStory = new Story();
 					result = headlines.getJSONObject(i);
 
 					tempStory.setId(result.optString("id"));
@@ -56,10 +78,7 @@ public class MainActivity extends Activity {
 
 					if (!images.isNull(0)) {
 						JSONObject url = images.getJSONObject(0);
-
-						if (url.getString("type").contains("header")) {
-							tempStory.setImageUrl(url.getString("url"));
-						}
+						tempStory.setImageUrl(url.getString("url"));
 					} else {
 						tempStory.setImageUrl("");
 					}
@@ -68,6 +87,14 @@ public class MainActivity extends Activity {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+			displayStories();
 		}
 	};
+
+	private void displayStories() {
+		Log.i("STORIES", "" + stories.toString());
+		adapter = new StoryAdapter(getApplication(), R.layout.story, stories);
+		list.setAdapter(adapter);
+		progress.setVisibility(View.GONE);
+	}
 }
