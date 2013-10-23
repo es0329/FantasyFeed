@@ -9,7 +9,7 @@
         android:title="@string/refresh"/>
     <item
         android:id="@+id/about"
-        android:icon="@drawable/ic_action_about"
+        android:icon="@drawable/ic_action_github"
         android:orderInCategory="2"
         android:showAsAction="ifRoom"
         android:title="@string/about"/>

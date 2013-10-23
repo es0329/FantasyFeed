@@ -6,11 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -133,10 +135,24 @@ public class MasterFragment extends Fragment {
 			checkNewsFeed();
 			return true;
 		case R.id.about:
-			Log.i("MENU", "ITEM #2");
+			showDialog(getActivity());
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void showDialog(Context context) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(context);
+		alert.setTitle(context.getResources().getString(R.string.about));
+		WebView wv = new WebView(context);
+
+		wv.loadUrl("file:///android_asset/credits.html");
+		wv.setHorizontalScrollBarEnabled(false);
+
+		alert.setView(wv);
+		alert.setNegativeButton(context.getResources()
+				.getString(R.string.close), null);
+		alert.show();
 	}
 }

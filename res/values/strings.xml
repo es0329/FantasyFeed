@@ -7,5 +7,6 @@
     <string name="data_credit">Powered by ESPN.</string>
     <string name="about">About</string>
     <string name="refresh">Refresh</string>
+    <string name="close">Close</string>
 
 </resources>
