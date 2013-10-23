@@ -5,5 +5,7 @@
     <string name="article_photo">Article photo.</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="data_credit">Powered by ESPN.</string>
+    <string name="about">About</string>
+    <string name="refresh">Refresh</string>
 
 </resources>

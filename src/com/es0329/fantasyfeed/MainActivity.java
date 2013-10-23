@@ -26,16 +26,9 @@ public class MainActivity extends FragmentActivity {
 		setFragment(currentFragment);
 	}
 
-	protected void setFragment(Fragment fragment) {
+	private void setFragment(Fragment fragment) {
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.fragmentHolder, currentFragment).commit();
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		getSupportFragmentManager().putFragment(outState, "content",
-				currentFragment);
 	}
 
 	@Override
@@ -43,5 +36,12 @@ public class MainActivity extends FragmentActivity {
 		super.onAttachedToWindow();
 		Window window = (Window) getWindow();
 		window.setFormat(PixelFormat.RGBA_8888);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		getSupportFragmentManager().putFragment(outState, "content",
+				currentFragment);
 	}
 }

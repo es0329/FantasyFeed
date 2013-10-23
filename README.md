@@ -1,6 +1,6 @@
 Fantasy Feed
 ------------
-The current day's Fantasy Football news from ESPN experts as a native mobile app optimized for handheld Android devices.
+Get current Fantasy Football news from ESPN experts, as a native mobile app optimized for handheld Android devices.
 
 Credits
 -------

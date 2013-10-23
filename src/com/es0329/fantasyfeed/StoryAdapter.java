@@ -22,6 +22,7 @@ public class StoryAdapter extends ArrayAdapter<Story> {
 	private Story currentStory;
 	private Holder holder;
 	private LayoutInflater inflater;
+	private View row;
 
 	public StoryAdapter(Context context, int resourceId,
 			ArrayList<Story> stories) {
@@ -33,7 +34,7 @@ public class StoryAdapter extends ArrayAdapter<Story> {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		View row = convertView;
+		row = convertView;
 		holder = null;
 
 		if (row == null) {
