@@ -6,10 +6,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -43,8 +46,15 @@ public class MasterFragment extends Fragment {
 		list = (ListView) layout.findViewById(R.id.list);
 		progress = (ProgressBar) layout.findViewById(R.id.progress);
 		dataCredit = (SmartImageView) layout.findViewById(R.id.dataCredit);
-		dataCredit
-				.setImageUrl("http://a.espncdn.com/i/apis/attribution/powered-by-espn-silver_200.png");
+		dataCredit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browser = new Intent(Intent.ACTION_VIEW, Uri
+						.parse("http://espn.go.com/"));
+				startActivity(browser);
+			}
+		});
 	}
 
 	private void checkNewsFeed() {
