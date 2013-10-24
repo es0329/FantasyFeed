@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
         android:layout_alignBottom="@id/image"
-        android:background="@color/filter"
+        android:background="@drawable/title_gradient"
         android:ellipsize="end"
         android:gravity="left|center_vertical"
         android:maxLines="2"
