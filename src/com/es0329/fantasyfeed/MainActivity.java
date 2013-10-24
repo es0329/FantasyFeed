@@ -3,13 +3,13 @@ package com.es0329.fantasyfeed;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Window;
 
 /**
  * @author <a href="https://twitter.com/es0329">Eric</a>
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
 	private Fragment currentFragment;
 
 	@Override
