@@ -3,7 +3,7 @@
     android:id="@+id/story"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/spacing" >
+    android:paddingBottom="@dimen/spacing" >
 
     <com.loopj.android.image.SmartImageView
         android:id="@+id/image"
@@ -27,7 +27,8 @@
         android:ellipsize="end"
         android:gravity="left|center_vertical"
         android:maxLines="2"
-        android:padding="@dimen/spacing"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:textColor="@color/white"
         android:textSize="@dimen/title_text"
         android:textStyle="bold" />
