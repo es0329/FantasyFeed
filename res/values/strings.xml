@@ -3,10 +3,11 @@
 
     <string name="app_name">Fantasy Feed</string>
     <string name="article_photo">Article photo.</string>
-    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</string>
     <string name="data_credit">Powered by ESPN.</string>
     <string name="about">About</string>
     <string name="refresh">Refresh</string>
     <string name="close">Close</string>
+    <string name="no_network">Oops, we need a network connection.</string>
+    <string name="error">Error:</string>
 
 </resources>

@@ -12,6 +12,11 @@
         android:background="@color/blackLight"
         android:contentDescription="@string/article_photo"
         android:scaleType="centerCrop" />
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/image_height"
+        android:background="@drawable/story_selector" />
 
     <TextView
         android:id="@+id/title"
@@ -23,7 +28,6 @@
         android:gravity="left|center_vertical"
         android:maxLines="2"
         android:padding="@dimen/spacing"
-        android:text="@string/lorem"
         android:textColor="@color/white"
         android:textSize="@dimen/title_text"
         android:textStyle="bold" />

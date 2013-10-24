@@ -24,7 +24,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,12 +42,13 @@ import com.loopj.android.image.SmartImageView;
  * @author <a href="https://twitter.com/es0329">Eric</a>
  */
 public class MasterFragment extends Fragment {
-	private ListView list;
-	private ProgressBar progress;
 	private SmartImageView dataCredit;
+	private ProgressBar progress;
+	private ListView list;
+
+	private ArrayList<Story> stories;
 	private StoryAdapter adapter;
 	private Story tempStory;
-	private ArrayList<Story> stories;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,19 +59,21 @@ public class MasterFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View masterLayout = inflater.inflate(R.layout.master, container, false);
-		wireViews(masterLayout);
-		// checkNewsFeed();
-		CheckNews checkNews = new CheckNews();
-		checkNews.execute();
+		View layout = inflater.inflate(R.layout.master, container, false);
+		wireViews(layout);
+		setListeners();
 
-		return masterLayout;
+		new CheckNews().execute();
+		return layout;
 	}
 
 	private void wireViews(View layout) {
 		list = (ListView) layout.findViewById(R.id.list);
 		progress = (ProgressBar) layout.findViewById(R.id.progress);
 		dataCredit = (SmartImageView) layout.findViewById(R.id.dataCredit);
+	}
+
+	private void setListeners() {
 		dataCredit.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -83,84 +85,37 @@ public class MasterFragment extends Fragment {
 		});
 	}
 
-	// private void checkNewsFeed() {
-	// progress.setVisibility(View.VISIBLE);
-	// RequestParams params = new RequestParams("apikey", getResources()
-	// .getString(R.string.api_key));
-	// Espn.get("", params, reponseHandler);
-	// }
-
-	// private JsonHttpResponseHandler reponseHandler = new
-	// JsonHttpResponseHandler() {
-	//
-	// @Override
-	// public void onSuccess(JSONObject response) {
-	// stories = new ArrayList<Story>();
-	//
-	// // Log.i("RESPONSE", response);
-	//
-	// try {
-	// JSONArray headlines = response.getJSONArray("headlines");
-	// JSONObject result = new JSONObject();
-	// JSONObject links = new JSONObject();
-	// JSONObject mobile = new JSONObject();
-	//
-	// for (int i = 0; i < headlines.length(); i++) {
-	// tempStory = new Story();
-	// result = headlines.getJSONObject(i);
-	//
-	// tempStory.setId(result.optString("id"));
-	// tempStory.setTitle(result.optString("title"));
-	//
-	// links = result.optJSONObject("links");
-	// mobile = links.getJSONObject("mobile");
-	// tempStory.setLink(mobile.optString("href"));
-	//
-	// JSONArray images = result.getJSONArray("images");
-	//
-	// if (!images.isNull(0)) {
-	// JSONObject url = images.getJSONObject(0);
-	// tempStory.setImageUrl(url.getString("url"));
-	// } else {
-	// tempStory.setImageUrl("");
-	// }
-	// stories.add(tempStory);
-	// }
-	// } catch (JSONException e) {
-	// e.printStackTrace();
-	// }
-	// displayStories();
-	// }
-	// };
-
 	private class CheckNews extends AsyncTask<String, Void, String> {
 		DefaultHttpClient client = new DefaultHttpClient();
-		HttpParams asyncParams;
+		HttpParams params;
 		HttpGet getPost;
 		String result;
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			asyncParams = client.getParams();
-			HttpConnectionParams.setConnectionTimeout(asyncParams, 30000);
-			HttpConnectionParams.setSoTimeout(asyncParams, 30000);
-			getPost = new HttpGet(Espn.BASE_URL + "apikey="
-					+ getActivity().getResources().getString(R.string.api_key));
+			params = client.getParams();
+			HttpConnectionParams.setConnectionTimeout(params, 30000);
+			HttpConnectionParams.setSoTimeout(params, 30000);
+			getPost = new HttpGet(
+					"http://api.espn.com/v1/fantasy/football/news?apikey="
+							+ getActivity().getResources().getString(
+									R.string.api_key));
 			progress.setVisibility(View.VISIBLE);
 		}
 
 		@Override
 		protected String doInBackground(String... params) {
+			stories = new ArrayList<Story>();
 
 			try {
-				Log.i("GET", getPost.getURI().toString());
 				HttpResponse response = client.execute(getPost);
 				result = inputStreamToString(response.getEntity().getContent())
 						.toString();
 			} catch (ConnectTimeoutException e) {
-				Toast.makeText(getActivity(), "No Internet", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(getActivity(),
+						getResources().getString(R.string.no_network),
+						Toast.LENGTH_SHORT).show();
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -190,16 +145,15 @@ public class MasterFragment extends Fragment {
 			try {
 				buildArticleList(result);
 			} catch (Exception E) {
-				Toast.makeText(getActivity(), "Error:" + E.getMessage(),
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(
+						getActivity(),
+						getResources().getString(R.string.error)
+								+ E.getMessage(), Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
 
 	private void buildArticleList(String rawJson) {
-		stories = new ArrayList<Story>();
-
-		Log.i("RESPONSE", rawJson);
 
 		try {
 			JSONObject response = new JSONObject(rawJson);
@@ -211,14 +165,12 @@ public class MasterFragment extends Fragment {
 			for (int i = 0; i < headlines.length(); i++) {
 				tempStory = new Story();
 				result = headlines.getJSONObject(i);
-
 				tempStory.setId(result.optString("id"));
 				tempStory.setTitle(result.optString("title"));
 
 				links = result.optJSONObject("links");
 				mobile = links.getJSONObject("mobile");
 				tempStory.setLink(mobile.optString("href"));
-
 				JSONArray images = result.getJSONArray("images");
 
 				if (!images.isNull(0)) {
@@ -251,19 +203,17 @@ public class MasterFragment extends Fragment {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.refresh:
-			// checkNewsFeed();
-			CheckNews checkNews = new CheckNews();
-			checkNews.execute();
+			new CheckNews().execute();
 			return true;
 		case R.id.about:
-			showDialog(getActivity());
+			displayCredits(getActivity());
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void showDialog(Context context) {
+	private void displayCredits(Context context) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(context);
 		alert.setTitle(context.getResources().getString(R.string.about));
 
