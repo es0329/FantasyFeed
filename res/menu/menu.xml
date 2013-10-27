@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fantasyfeed="http://schemas.android.com/apk/res-auto" >
 
     <item
         android:id="@+id/refresh"
         android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="1"
-        android:showAsAction="ifRoom"
-        android:title="@string/refresh"/>
+        android:title="@string/refresh"
+        fantasyfeed:showAsAction="ifRoom"/>
     <item
         android:id="@+id/about"
         android:icon="@drawable/ic_action_github"
         android:orderInCategory="2"
-        android:showAsAction="ifRoom"
-        android:title="@string/about"/>
+        android:title="@string/about"
+        fantasyfeed:showAsAction="never"/>
 
 </menu>
