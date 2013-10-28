@@ -1,6 +1,7 @@
 Fantasy Feed
 ------------
 A native-Android mobile app to get current Fantasy Football news from ESPN experts.
+![Screenshot](http://es0329.com/images/fantasy_feed_framed.png)
 
 Technical
 ---------
